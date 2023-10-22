@@ -18,9 +18,9 @@ keywords = [
 ]
 urls = { repository = "http://github.com/mkody/play-with-mpv" }
 classifiers = [
-    "Development Status :: 3 - Alpha",
+    "Development Status :: 4 - Beta",
     "Topic :: Utilities",
-    "License :: OSI Approved :: MIT License",
+    "License :: OSI Approved :: The Unlicense (Unlicense)",
 ]
 dependencies = [
   "wheel",
