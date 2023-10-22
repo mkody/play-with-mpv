@@ -1,12 +1,12 @@
 # Play with MPV
-Chrome extension and python server that allows you to play videos in webpages with MPV instead.  
+WebExtension and python server that allows you to play videos in webpages with MPV instead.  
 Works on [hundreds of sites](https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md) thanks to yt-dlp,
 and even torrents if you install [peerflix](https://github.com/mafintosh/peerflix).
 
 ## Installation
 1. Install [MPV](https://mpv.io/installation/)
 2. Install [3.10+](https://www.python.org/downloads/) and [pip](https://pip.pypa.io/en/stable/installing/)
-3. Install [the chrome extension](https://chrome.google.com/webstore/detail/play-with-mpv/hahklcmnfgffdlchjigehabfbiigleji)
+3. Install the [chrome](https://chrome.google.com/webstore/detail/play-with-mpv/hahklcmnfgffdlchjigehabfbiigleji) or [firefox](https://addons.mozilla.org/firefox/addon/play-with-mpv/) extension
 4. Run `pip install git+git://github.com/mkody/play-with-mpv --user`
 5. Start server by running `play-with-mpv`
 
