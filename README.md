@@ -1,14 +1,14 @@
 # Play with MPV
 Chrome extension and python server that allows you to play videos in webpages with MPV instead.  
-Works on [hundreds of sites](https://rg3.github.io/youtube-dl/supportedsites.html) thanks to youtube-dl,
+Works on [hundreds of sites](https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md) thanks to yt-dlp,
 and even torrents if you install [peerflix](https://github.com/mafintosh/peerflix).
 
 ## Installation
 1. Install [MPV](https://mpv.io/installation/)
-2. Install [python 2 or 3](https://www.python.org/downloads/) and [pip](https://pip.pypa.io/en/stable/installing/)
-3. Install [chrome extension](https://chrome.google.com/webstore/detail/play-with-mpv/hahklcmnfgffdlchjigehabfbiigleji)
-4. Run `pip install git+git://github.com/thann/play-with-mpv --user`
-5. Start server by running `play-with-mpv` (or use the Linux _free desktop_ shortcut)
+2. Install [3.10+](https://www.python.org/downloads/) and [pip](https://pip.pypa.io/en/stable/installing/)
+3. Install [the chrome extension](https://chrome.google.com/webstore/detail/play-with-mpv/hahklcmnfgffdlchjigehabfbiigleji)
+4. Run `pip install git+git://github.com/mkody/play-with-mpv --user`
+5. Start server by running `play-with-mpv`
 
 (optional) Install [fair-use](https://chrome.google.com/webstore/detail/fair-use-download/fhokdginneihphnneihijgbhbdoehjaj) extension.  
 (optional) Install [peerflix](https://github.com/mafintosh/peerflix) to stream torrents.  
@@ -21,10 +21,10 @@ and [extension](https://chrome.google.com/webstore/detail/edeepcccaejnnodlpmcoac
 Right-click [this link](https://www.youtube.com/watch?v=dQw4w9WgXcQ) and select "Play with MPV".
 MPV should popup and start playing the video. (Ctrl+Space also works)
 
-![screenshot](https://github.com/thann/play-with-mpv/raw/master/screenshot.png)
+![screenshot](https://github.com/mkody/play-with-mpv/raw/master/screenshot.png)
 
 ## Autostart
-- Linux: `cp {/usr,~/.local}/share/applications/thann.play-with-mpv.desktop ~/.config/autostart`
+- ~~Linux: `cp {/usr,~/.local}/share/applications/mkody.play-with-mpv.desktop ~/.config/autostart`~~
 - MacOS: [instructions](https://stackoverflow.com/questions/29338066/mac-osx-execute-a-python-script-at-startup)
 - Windows [instructions](https://stackoverflow.com/questions/4438020/how-to-start-a-python-file-while-windows-starts)
 

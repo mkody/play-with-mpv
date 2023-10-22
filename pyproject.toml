@@ -1,0 +1,63 @@
+[project]
+name = "play-with-mpv"
+authors = [
+  { name="Jonathan Knapp", email="jaknapp8@gmail.com" },
+  { name="André Kody Fernandes", email="im@kdy.ch"}
+]
+version = "0.2.0"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { file = "LICENSE" }
+description = "Chrome extension and python server that allows you to play videos in webpages with MPV instead."
+keywords = [
+  "mpv",
+  "video",
+  "play",
+  "chrome",
+  "extension",
+]
+urls = { repository = "http://github.com/mkody/play-with-mpv" }
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Topic :: Utilities",
+    "License :: OSI Approved :: MIT License",
+]
+dependencies = [
+  "wheel",
+  "yt-dlp",
+  "psutil~=5.9.6",
+]
+
+[project.gui-scripts]
+play-with-mpv = "play_with_mpv:start"
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+py-modules = ["play_with_mpv"]
+
+[tool.ruff]
+line-length = 80
+select = [
+  "E",
+  "F",
+  "W",
+  "I",
+  "N",
+  "COM",
+  "PIE",
+  "T20",
+  "Q",
+  "RET",
+  "SIM",
+  "ARG",
+  "PTH",
+  "PL",
+  "RUF",
+]
+ignore = [
+  # `print` found
+  "T201",
+]
