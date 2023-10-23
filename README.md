@@ -5,7 +5,7 @@ and even torrents if you install [peerflix](https://github.com/mafintosh/peerfli
 
 ## Installation
 1. Install [MPV](https://mpv.io/installation/)
-2. Install [3.10+](https://www.python.org/downloads/) and [pip](https://pip.pypa.io/en/stable/installing/)
+2. Install [Python 3.10+](https://www.python.org/downloads/) and [pip](https://pip.pypa.io/en/stable/installing/)
 3. Install the [chrome](https://chrome.google.com/webstore/detail/play-with-mpv/hahklcmnfgffdlchjigehabfbiigleji) or [firefox](https://addons.mozilla.org/firefox/addon/play-with-mpv/) extension
 4. Run `pip install git+git://github.com/mkody/play-with-mpv --user`
 5. Start server by running `play-with-mpv`
@@ -13,9 +13,8 @@ and even torrents if you install [peerflix](https://github.com/mafintosh/peerfli
 (optional) Install [fair-use](https://chrome.google.com/webstore/detail/fair-use-download/fhokdginneihphnneihijgbhbdoehjaj) extension.  
 (optional) Install [peerflix](https://github.com/mafintosh/peerflix) to stream torrents.  
 (optional) Install [mkchromecast](http://mkchromecast.com/) `pip install git+git://github.com/muammar/mkchromecast --user`
-and [extension](https://chrome.google.com/webstore/detail/edeepcccaejnnodlpmcoackkdgaijakg).  
-(recommended) Install youtube-dl through your package manager for frequent updates.  
-(Arch Linux) [aur package](https://aur.archlinux.org/packages/play-with-mpv-git) available.
+and [this extension](https://chrome.google.com/webstore/detail/edeepcccaejnnodlpmcoackkdgaijakg).  
+(recommended) Install `yt-dlp` through your package manager for frequent updates.  
 
 ## Usage
 Right-click [this link](https://www.youtube.com/watch?v=dQw4w9WgXcQ) and select "Play with MPV".
