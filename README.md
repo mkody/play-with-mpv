@@ -7,10 +7,9 @@ and even torrents if you install [peerflix](https://github.com/mafintosh/peerfli
 1. Install [MPV](https://mpv.io/installation/)
 2. Install [Python 3.10+](https://www.python.org/downloads/) and [pip](https://pip.pypa.io/en/stable/installing/)
 3. Install the [chrome](https://chrome.google.com/webstore/detail/play-with-mpv/hahklcmnfgffdlchjigehabfbiigleji) or [firefox](https://addons.mozilla.org/firefox/addon/play-with-mpv/) extension
-4. Run `pip install git+git://github.com/mkody/play-with-mpv --user`
+4. Run `pip install git+https://github.com/mkody/play-with-mpv --user`
 5. Start server by running `play-with-mpv`
 
-(optional) Install [fair-use](https://chrome.google.com/webstore/detail/fair-use-download/fhokdginneihphnneihijgbhbdoehjaj) extension.  
 (optional) Install [peerflix](https://github.com/mafintosh/peerflix) to stream torrents.  
 (optional) Install [mkchromecast](http://mkchromecast.com/) `pip install git+git://github.com/muammar/mkchromecast --user`
 and [this extension](https://chrome.google.com/webstore/detail/edeepcccaejnnodlpmcoackkdgaijakg).  

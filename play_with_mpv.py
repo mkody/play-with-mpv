@@ -1,12 +1,16 @@
 #!/usr/bin/env python
 # Plays MPV when instructed to by a chrome extension =]
 import argparse
+import atexit
+import contextlib
+import signal
 import sys
 import urllib.parse as urlparse
 from http import server
 from subprocess import Popen
 
-import psutil
+# Global to track active processes
+active_processes = []
 
 
 class Handler(server.BaseHTTPRequestHandler):
@@ -19,15 +23,13 @@ class Handler(server.BaseHTTPRequestHandler):
             self.wfile.write(bytes(body+"\n", "utf-8"))
 
     def do_GET(self):  # noqa: N802, PLR0915, PLR0912
-        if is_running():
-            print("MPV seems to already be running.")
-            self.respond(400)
-            return
+        # Make sure we don't have any hanging processes or multiple instances
+        cleanup_processes()
 
         try:
             url = urlparse.urlparse(self.path)
             query = urlparse.parse_qs(url.query)
-        except Exception:
+        except (ValueError, AttributeError):
             query = {}
 
         if query.get("mpv_args"):
@@ -40,37 +42,46 @@ class Handler(server.BaseHTTPRequestHandler):
                 try:
                     pipe = Popen(["peerflix", "-k", urls, "--",
                                   "--force-window", *query.get("mpv_args", [])])
+                    active_processes.append(pipe)
                 except FileNotFoundError:
                     missing_bin("peerflix")
+
             elif urls.startswith(("http:", "https:")):
                 try:
                     pipe = Popen(["mpv", urls, "--force-window",
                                   *query.get("mpv_args", [])])
+                    active_processes.append(pipe)
                 except FileNotFoundError:
                     missing_bin("mpv")
+
             else:
                 self.respond(400)
                 return
+
             self.respond(200, "playing...")
 
         elif "cast_url" in query:
             urls = str(query["cast_url"][0])
+
             if urls.startswith("magnet:") or urls.endswith(".torrent"):
                 print(" === WARNING: Casting torrents not yet fully supported!")
                 try:
-                    with Popen(["mkchromecast", "--video",
-                                "--source-url", "http://localhost:8888"]):
-                        pass
+                    pipe = Popen(["mkchromecast", "--video",
+                                "--source-url", "http://localhost:8888"])
+                    active_processes.append(pipe)
                 except FileNotFoundError:
                     missing_bin("mkchromecast")
-                pipe.terminate()
+
             elif urls.startswith(("http:", "https:")):
                 try:
                     pipe = Popen(["mkchromecast", "--video", "-y", urls])
+                    active_processes.append(pipe)
                 except FileNotFoundError:
                     missing_bin("mkchromecast")
+
             else:
                 self.respond(400)
+
             self.respond(200, "casting...")
 
         elif "fairuse_url" in query:
@@ -86,14 +97,17 @@ class Handler(server.BaseHTTPRequestHandler):
                 msg = " === ERROR: Downloading torrents not yet supported!"
                 print(msg)
                 self.respond(400, msg)
+
             elif urls.startswith(("http:", "https:")):
                 try:
                     pipe = Popen(["yt-dlp", urls, "-o", location,
                                   *query.get("ytdl_args", [])])
+                    active_processes.append(pipe)
                 except FileNotFoundError:
                     missing_bin("yt-dlp")
 
                 self.respond(200, "downloading...")
+
             else:
                 self.respond(400)
 
@@ -101,22 +115,43 @@ class Handler(server.BaseHTTPRequestHandler):
             self.respond(400)
 
 
-def missing_bin(bin):
+def missing_bin(name):
     print("======================")
-    print(f"ERROR: {bin.upper()} does not appear to be installed correctly! " +
-          'Please ensure you can launch "{bin}" in the terminal.')
+    print(
+        f"ERROR: {name.upper()} does not appear to be installed correctly! "
+        f'Please ensure you can launch "{name}" in the terminal.',
+    )
     print("======================")
 
 
-def is_running():
-    # Check with .exe on Windows
-    if sys.platform.startswith("win"):
-        return any(p.name() == "mpv.exe" for p in psutil.process_iter())
+def cleanup_processes():
+    for proc in active_processes:
+        if proc.poll() is None:  # Check if process is still running
+            try:
+                proc.terminate()
+                proc.wait(timeout=3)  # Wait for graceful termination
+            except OSError:
+                with contextlib.suppress(Exception):
+                    proc.kill()  # Force kill if termination fails
 
-    return any(p.name() == "mpv" for p in psutil.process_iter())
+    active_processes.clear()  # Clear the list of active processes
+
+
+def signal_handler(_sig, _frame):
+    print("\nReceived signal to terminate.")
+    cleanup_processes()
+    sys.exit(0)
 
 
 def start():
+    # Register the cleanup function to run at exit
+    atexit.register(cleanup_processes)
+
+    # Set up signal handlers
+    signal.signal(signal.SIGINT, signal_handler)
+    if not sys.platform.startswith("win"):
+        signal.signal(signal.SIGTERM, signal_handler)
+
     parser = argparse.ArgumentParser(
         description="Plays MPV when instructed to by a browser extension.",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
@@ -128,7 +163,7 @@ def start():
     args = parser.parse_args()
     hostname = "0.0.0.0" if args.public else "localhost"
     httpd = server.HTTPServer((hostname, args.port), Handler)
-    print("Serving on {}:{}".format(hostname, args.port))
+    print(f"Serving on {hostname}:{args.port}")
 
     try:
         httpd.serve_forever()

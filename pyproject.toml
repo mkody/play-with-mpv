@@ -2,13 +2,13 @@
 name = "play-with-mpv"
 authors = [
   { name="Jonathan Knapp", email="jaknapp8@gmail.com" },
-  { name="André Kody Fernandes", email="im@kdy.ch"}
+  { name="André Kody Fernandes", email="im@kdy.ch"},
 ]
-version = "0.2.0"
+version = "0.3.0"
 readme = "README.md"
 requires-python = ">=3.10"
 license = { file = "LICENSE" }
-description = "Chrome extension and python server that allows you to play videos in webpages with MPV instead."
+description = "Browser extension and python server that allows you to play videos in webpages with MPV instead."
 keywords = [
   "mpv",
   "video",
@@ -25,7 +25,6 @@ classifiers = [
 dependencies = [
   "wheel",
   "yt-dlp",
-  "psutil~=5.9.6",
 ]
 
 [project.gui-scripts]
@@ -40,24 +39,43 @@ py-modules = ["play_with_mpv"]
 
 [tool.ruff]
 line-length = 80
+
+[tool.ruff.lint]
 select = [
-  "E",
-  "F",
-  "W",
-  "I",
-  "N",
+  "A",
+  "ARG",
+  "ASYNC",
+  "B",
+  "BLE",
+  "C4",
   "COM",
+  "DTZ",
+  "E",
+  "EM",
+  "F",
+  "FLY",
+  "FURB",
+  "I",
+  "ICN",
+  "INP",
+  "ISC",
+  "N",
+  "PERF",
   "PIE",
-  "T20",
+  "PL",
+  "PTH",
   "Q",
   "RET",
-  "SIM",
-  "ARG",
-  "PTH",
-  "PL",
+  "RSE",
   "RUF",
+  "SIM",
+  "SLF",
+  "TD",
+  "UP",
+  "W",
+  "YTT",
 ]
 ignore = [
-  # `print` found
-  "T201",
+  # Missing issue link for this TODO
+  "T003",
 ]
